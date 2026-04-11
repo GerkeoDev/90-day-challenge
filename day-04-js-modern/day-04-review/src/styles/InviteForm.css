@@ -1,0 +1,19 @@
+.formClass {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+.divs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.divs2 {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+.marginBDiv {
+    margin-bottom: 10px;
+}
