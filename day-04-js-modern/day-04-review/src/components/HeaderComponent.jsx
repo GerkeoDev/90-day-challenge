@@ -1,8 +1,9 @@
+
 import '../styles/HeaderComponent.css'
-const HeaderComponent = () => {
+const HeaderComponent = ({formData}) => {
     return (
         <div className='header'>
-            
+            {/* <button onClick={()=> console.log(formData)}>Verify Data</button> */}
         </div>
     )
 }

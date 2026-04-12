@@ -1,10 +1,10 @@
 /* ===== BODY ===== */
 body {
   margin: 0;
-  color: #333;
+  color: #d4d4d4;
   font-family: Arial, Helvetica, sans-serif;
   font-size: large;
-  background-color: #f4f6f8;
+  background-color: #421818;
   height: 100vh;
 }
 
@@ -38,8 +38,8 @@ input {
 }
 
 input:focus {
-  border-color: #e24a4a;
-  box-shadow: 0 0 5px #e24a4a80;
+  border-color: #aa1313;
+  box-shadow: 10px 10px 10px #300d0d;
 }
 
 /* ===== OLD BUTTON ===== */
@@ -65,7 +65,8 @@ button {
 }
 
 button:hover {
-  background-color: #882a2afd;
+  border-color: #4b0a0a;
+  background-color: #531717;
   color: #d4d4d4;
 }
 
