@@ -5,16 +5,17 @@ import InviteForm from "../components/InviteForm";
 // import NumberCounter from "../components/NumberCounter";
 const Main = () => {
     const [formData, setFormData] = useState({})
+    const [submitted, setSubmitted] = useState(false)
     const handleFormData = (data) => {
-        console.log("Datos recibidos en Main:", data)
         setFormData(data)
+        setSubmitted(true)
     }
     return (
         <div>
-            <HeaderComponent formData={formData}/>
+            <HeaderComponent formData={formData} submitted={submitted}/>
             <div className="content">
                 {/* <NumberCounter/> */}
-                <InviteForm onSubmitForm={handleFormData}/>
+                <InviteForm onSubmitForm={handleFormData} submitted={submitted}/>
             </div>
             
         </div>

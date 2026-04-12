@@ -2,3 +2,18 @@
     background-color: #3d1111;
     height: 100px;
 }
+.divs2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+.success {
+  color: #d4d4d4;
+  opacity: 0.7;
+}
+
+.idle {
+  color: #d4d4d4;
+  opacity: 0.7;
+}
