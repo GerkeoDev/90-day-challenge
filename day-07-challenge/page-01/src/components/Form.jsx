@@ -19,6 +19,8 @@ const Form = () => {
             size: parseInt(sizeInput)
           }
         ])
+        setColorInput('')
+        setSizeInput('')
       }
     
     return (
