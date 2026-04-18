@@ -1,7 +1,12 @@
-import { useEffect } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 const droids = require("../assets/images/droids.png")
 
-const Layout = ({data}) => {
+const Details = () => {
+    const [data, setData] = useState(null)
+    const id = useParams().id;
+    const type = useParams().type;
     let title = ""
     let properties = []
     switch(data?.type){
@@ -34,21 +39,26 @@ const Layout = ({data}) => {
             break;
     }
     useEffect(()=> {
-        console.log("Data from Layout",data)
-    },[data])
-    return data==="error"?(
+        axios.get(`https://swapi.dev/api/${type}/${id}`)
+            .then(res => setData({resource: res.data, type: type}))
+            .catch(err => setData("error"))
+    },[id, type])
+    return data==="error"?
+    (
         <div>
             <p>These aren't the droids you're looking for</p>
             <img src={droids} alt="These aren't the droids you're looking for" />
         </div>
     ):(
         <div>
+            <h1>{type.charAt(0).toUpperCase() + type.slice(1)} Details</h1>
             <h2>{title}</h2>
-            {properties.map((p, index)=>(
-                <div key={index}>{p}</div>
+            {properties.map((p, index)=> (
+                <div key={index}>
+                    {p}
+                </div>
             ))}
         </div>
     )
 }
-export default Layout;
-
+export default Details;
