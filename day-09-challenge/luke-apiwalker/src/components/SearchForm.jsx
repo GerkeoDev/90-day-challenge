@@ -12,8 +12,8 @@ const SearchForm = ({updateData}) => {
     const handleSubmit = (e) =>{
         e.preventDefault()
         axios.get(`https://swapi.dev/api/${selected}/${selectedId}`)
-            .then(res => updateData(res.data))
-            .catch(err => console.error(err))
+            .then(res => updateData({resource: res.data, type: selected}))
+            .catch(err => updateData("error"))
     }
     return (
         <div>
