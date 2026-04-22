@@ -5,9 +5,26 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #121417;
+  color: #f5f3ee;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+
+
+
+/* 
+| Role           | Color         | Hex       |
+| -------------- | ------------- | --------- |
+| Background     | Rich charcoal | `#121417` |
+| Surface        | Soft graphite | `#1C1F24` |
+| Primary text   | Warm white    | `#F5F3EE` |
+| Secondary text | Muted stone   | `#B8B2A7` |
+| Accent         | Antique gold  | `#C6A45A` |
+| Accent hover   | Deep gold     | `#A8843D` |
+ */
