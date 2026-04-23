@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ProductForm = (props) => {
     const {initialData, onSubmitProp} = props;
     const [product, setProduct] = useState(initialData);
     const handleSubmit = e => {
         e.preventDefault();
-        onSubmitProp(product);
+        onSubmitProp({
+            title: product.title,
+            price: product.price,
+            description: product.description
+        });
         setProduct(initialData);
     };
     const handleChange = e => {
@@ -15,6 +19,9 @@ const ProductForm = (props) => {
             [e.target.name]: e.target.value
         })
     }
+    useEffect(() => {
+        setProduct(initialData);
+    },[initialData?.title, initialData?.price, initialData?.description])
     return (
         <form onSubmit={handleSubmit} className="form">
             <div>
