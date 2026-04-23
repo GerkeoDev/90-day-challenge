@@ -14,6 +14,17 @@ code {
     monospace;
 }
 
+.main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;/*Adjust the gap between form fields as needed*/
+}
 
 
 
