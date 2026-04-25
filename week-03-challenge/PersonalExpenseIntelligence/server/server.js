@@ -13,5 +13,8 @@ app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 
 //Routes
+const {oAuthRouter} = require('./routes/oauth.routes');
+app.use('/api/', oAuthRouter)
+
 
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
