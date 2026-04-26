@@ -15,7 +15,7 @@ const verifyToken = (req, res, next) => {
     }
 
     if (!token){
-        return res.status(401).json({error: "Token no enviado"})
+        return res.status(401).json({error: "Token didn't send"})
     }
 
     try {

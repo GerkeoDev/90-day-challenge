@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import HTTPClient from './utils/HTTPClient'
+import { AuthContext } from './context/AuthContext'
 
 
 const PageRouter = () => {
@@ -14,20 +15,23 @@ const PageRouter = () => {
     const client = new HTTPClient()
     
     client.me()
-      .then(res => setUser(res.data))
+      .then(res => {
+        setUser(res.data)
+      })
       .catch(() => setUser(null))
       .finally(() => setLoading(false))
-    console.log(user)
   }, [])
   if (loading) return <div>Loading...</div>
   return(
-    <>{/*TODO: Add AuthContext here*/}
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<LoginPage />} />
-        </Routes>
-      </BrowserRouter>
+    <>
+      <AuthContext.Provider value={{user}}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/account" element={<LoginPage />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthContext.Provider>
     </>
   )
 }

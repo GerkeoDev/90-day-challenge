@@ -12,23 +12,24 @@ const LoginFormComp = (props) => {
     }
     const handleSubmit = (e) => {
         e.preventDefault()
-        const client = new HTTPClient()
+        let client = new HTTPClient()
         if (!dataForm.email || !dataForm.password) return
         console.log(dataForm)
         client.login(dataForm.email, dataForm.password)
             .then(() => client.me())
             .then(res => console.log(res))
-        //To be continued...
+            .then(() => window.location.href = '/')
+            .catch(err => console.log(err))
         setDataForm({})
     }
     const inputStyle = "w-full px-4 mb-2 py-2 bg-gray-200 text-gray-900 text-sm rounded-lg border border-transparent focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition"
     return (
         <div>
                 <div className="flex justify-between mb-5">
-                    <h1 className="text-2xl">Sign In</h1>
+                    <h1 className="text-2xl text-orange-400 ">Sign In</h1>
                     <button 
                         onClick={()=>changeCurrentView('Register')}
-                        className="bg-gray-700 text-orange-400 weight-bold px-5 py-2.5 rounded-full hover:bg-gray-800 transition shadow-sm"
+                        className="bg-gray-700 text-orange-400 weight-bold px-2 py-2 rounded-lg hover:bg-gray-800 transition shadow-sm"
                     >Register</button>
                 </div>
                 
@@ -51,7 +52,7 @@ const LoginFormComp = (props) => {
                             onChange={handleChange}
                         />
                     </div>
-                    <button type="submit" className="bg-gray-800 text-orange-400 weight-bold px-5 py-2.5 rounded-full hover:bg-gray-900 transition shadow-sm">Sign In</button>
+                    <button type="submit" className="bg-gray-800 text-orange-400 weight-bold px-2 py-2 rounded-lg hover:bg-gray-900 transition shadow-sm">Sign In</button>
                 </form>
                 
         </div>

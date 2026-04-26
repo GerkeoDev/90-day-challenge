@@ -5,18 +5,13 @@ const jwt = require('jsonwebtoken');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-//Realmente no entiendo nada de esta parte
-//En el login controller se van a manejar las funciones de registro, login, refresh y logout.
-//En el register se va a crear un nuevo usuario, se va a hashear la contraseña y se va a guardar en la base de datos.
-//En el login se va a buscar el usuario por email, se va a comparar la contraseña hasheada con la contraseña ingresada, si son iguales se va a generar un token y un refresh token, se va a guardar el token en una cookie y se va a enviar el token y el refresh token al cliente.
-//En el refresh se va a verificar el refresh token, si es válido se va a generar un nuevo token y un nuevo refresh token, se va a enviar el nuevo token y el nuevo refresh token al cliente.
-//En el logout se va a eliminar la cookie del token y se va a enviar un mensaje de logout exitoso al cliente.
-
 const register = async (req, res) => {
     let userData = req.body;
     try {
         let existUserWithSameEmail = await User.exists({ email: userData.email });
         let existUserWithSameName = await User.exists({ userName: userData.userName });
+
+        const errors = {}
 
         if (existUserWithSameEmail){
             errors.email = "The email already exists"
@@ -30,7 +25,7 @@ const register = async (req, res) => {
             return res.status(500).json({ errors });
         }
 
-        let hashedPassword = await Promise((resolve, reject) => {
+        let hashedPassword = await new Promise((resolve, reject) => {
             bcrypt.hash(userData.password, 10, function(err, hash){
                 if (err) reject(err)
                 resolve(hash)
@@ -39,7 +34,7 @@ const register = async (req, res) => {
 
         let user = new User({
             ...userData,
-            password: hash
+            password: hashedPassword
         })
         await user.save()
         res.json({user})
@@ -62,9 +57,13 @@ const login = async (req, res) => {
     try {
         let user = await User.findOne({ email: data.email });
 
+        if (!user){
+            return res.status(400).json({ error: 'Invalid credentials'})
+        }
+
         let samePassword = await bcrypt.compareSync(data.password, user.password);
 
-        if (!samePassword){
+        if (samePassword){
             const payload = {
                 id: user._id,
                 userName: user.userName
@@ -124,9 +123,22 @@ const logout = async (req, res) => {
     }
 }
 
+const me = (req, res) => {
+    try {
+        const token = req.cookies.token
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
+        res.json(payload)
+        console.log("PAYLOAD: ", payload)
+    } catch {
+        res.status(401)
+        res.json({ error: 'Unauthorized' })
+    }
+}
+
 module.exports = {
     register,
     login,
     refresh,
-    logout
+    logout,
+    me
 }

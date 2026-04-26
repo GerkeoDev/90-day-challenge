@@ -1,4 +1,5 @@
 import { useState } from "react"
+import HTTPClient from "../utils/HTTPClient"
 
 const RegisterFormComp = (props) => {
     const {changeCurrentView} = props
@@ -15,6 +16,15 @@ const RegisterFormComp = (props) => {
         e.preventDefault()
         if (!dataForm.email || !dataForm.userName || !dataForm.password) return
         console.log(dataForm)
+        let client = new HTTPClient()
+
+        client.register(dataForm)
+            .then(() => client.login(dataForm.email, dataForm.password))
+            .then(() => client.me())
+            .then(res => console.log(res))
+            .then(() => window.location.href = '/')
+            .catch(err => console.log(err))
+
         setDataForm({})
     }
 
@@ -22,10 +32,10 @@ const RegisterFormComp = (props) => {
     return (
         <div>
             <div className="flex justify-between mb-5">
-                    <h1 className="text-2xl">Register</h1>
+                    <h1 className="text-2xl text-orange-400 ">Register</h1>
                     <button 
                         onClick={()=>changeCurrentView('Sign In')}
-                        className="bg-gray-700 text-orange-400 weight-bold px-5 py-2.5 rounded-full hover:bg-gray-800 transition shadow-sm"
+                        className="bg-gray-700 text-orange-400 weight-bold px-2 py-2 rounded-lg hover:bg-gray-800 transition shadow-sm"
                     >Sign In</button>
                 </div>
                 
@@ -56,7 +66,7 @@ const RegisterFormComp = (props) => {
                             onChange={handleChange}
                         />
                     </div>
-                    <button type="submit" className="bg-gray-800 text-orange-400 weight-bold px-5 py-2.5 rounded-full hover:bg-gray-900 transition shadow-sm">Register</button>
+                    <button type="submit" className="bg-gray-800 text-orange-400 weight-bold px-2 py-2 rounded-lg hover:bg-gray-900 transition shadow-sm">Register</button>
                 </form>
         </div>
     )
