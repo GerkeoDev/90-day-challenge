@@ -18,5 +18,8 @@ app.use(cookieParser());
 const {oAuthRouter} = require('./routes/oauth.routes');
 app.use('/api/', oAuthRouter)
 
+const {expenseRouter} = require('./routes/expense.routes');
+app.use('/api/', expenseRouter)
+
 
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
