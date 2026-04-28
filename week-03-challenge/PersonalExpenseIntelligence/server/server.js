@@ -21,5 +21,8 @@ app.use('/api/', oAuthRouter)
 const {expenseRouter} = require('./routes/expense.routes');
 app.use('/api/', expenseRouter)
 
+const {analysisRouter} = require('./routes/analysis.routes');
+app.use('/api/', analysisRouter)
+
 
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));

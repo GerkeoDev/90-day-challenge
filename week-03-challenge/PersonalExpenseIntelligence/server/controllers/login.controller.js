@@ -128,7 +128,7 @@ const me = (req, res) => {
         const token = req.cookies.token
         const payload = jwt.verify(token, process.env.JWT_SECRET)
         res.json(payload)
-        console.log("PAYLOAD: ", payload)
+        // console.log("PAYLOAD: ", payload)
     } catch {
         res.status(401)
         res.json({ error: 'Unauthorized' })

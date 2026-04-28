@@ -29,6 +29,18 @@ class HTTPClient {
         return this.instance.post('/logout')
     }
 
+    createExpense(data){
+        return this.instance.post('/expenses', data)
+    }
+
+    getAllExpenses(){
+        return this.instance.get('/expenses')
+    }
+
+    getGeneralAnalysis(){
+        return this.instance.get('/analysis/general')
+    }
+
 }
 
 export default HTTPClient

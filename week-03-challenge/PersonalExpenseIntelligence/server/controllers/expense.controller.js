@@ -1,14 +1,20 @@
 const {Expense} = require('../models/expense.model')
 
+//Add user authentication
+
 const createExpense = (req, res) => {
-    const { userId, amount, description, category } = req.body
+    console.log(req.body)
+    const { amount, description, category } = req.body
     Expense.create({
-        userId,
+        userId: req.user.id,
         amount,
         description,
         category
     })
-        .then(newExpense => res.json(newExpense))
+        .then(newExpense => {
+            res.json(newExpense)
+            console.log('New expense created: ', newExpense)
+        })
         .catch(err => res.status(400).json(err))
 }
 
