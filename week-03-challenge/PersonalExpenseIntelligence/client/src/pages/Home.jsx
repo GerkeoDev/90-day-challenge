@@ -4,9 +4,11 @@ import { AuthContext } from "../context/AuthContext"
 import ExpenseFormComp from "../components/ExpenseFormComp"
 import HTTPClient from "../utils/HTTPClient"
 import AnalysisComp from "../components/AnalysisComp"
+import { useState } from "react"
 
 const Home = () => {
     const { user } = useContext(AuthContext)
+    const [analysis, setAnalysis] = useState({})
 
     const createExpenseFromForm = (data) => {
         const client = new HTTPClient()
@@ -15,8 +17,14 @@ const Home = () => {
             .catch(err => console.log(err))
     }
 
+
+
     useEffect(() => {
-        console.log("User: ", user)
+        const client = new HTTPClient()
+        
+        client.getGeneralAnalysis()
+            .then(res => setAnalysis(res.data))
+            .catch(err => console.log(err))
     }, [])
     return !user ? (
         <>
@@ -36,7 +44,7 @@ const Home = () => {
                 <div className="bg-gray-600 h-screen flex justify-center">
                     <div className="w-full p-5 flex flex-col">
                         <ExpenseFormComp onSubmitProp={createExpenseFromForm}/>
-                        <AnalysisComp />
+                        <AnalysisComp analysis={analysis}  />
                     </div>
                 </div>
             </div>
