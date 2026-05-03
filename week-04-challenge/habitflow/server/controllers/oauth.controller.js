@@ -21,7 +21,7 @@ const register = async (req, res) => {
             errors.userName = "The user name already exists"
         }
 
-        if (Objects.keys(errors).length > 0) {
+        if (Object.keys(errors).length > 0) {
             return res.status(500).json({ errors })
         }
 
