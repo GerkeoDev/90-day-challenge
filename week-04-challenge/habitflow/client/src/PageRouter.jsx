@@ -6,7 +6,7 @@ import HTTPClient from './utils/HTTPClient'
 import { useState } from 'react'
 import DashboardPage from './pages/DashboardPage'
 import AuthPage from './pages/AuthPage'
-
+import { PublicRoute, PrivateRoute } from './components/RouteGuards'
 
 const PageRouter = () => {
   const [user, setUser] = useState(null)
@@ -27,9 +27,18 @@ const PageRouter = () => {
       <AuthContext.Provider value={{user}}>
           <BrowserRouter>
           <Routes>
-            <Route path='/' element={<LandingPage />} />
-            <Route path='/account' element={<AuthPage />} />
-            <Route path='/dashboard' element={<DashboardPage />} />
+            <Route 
+              path='/' 
+              element={<PublicRoute><LandingPage /></PublicRoute>} 
+            />
+            <Route 
+              path='/account' 
+              element={<AuthPage />} 
+            />
+            <Route 
+              path='/dashboard' 
+              element={<PrivateRoute><DashboardPage /></PrivateRoute>} 
+            />
           </Routes>
         </BrowserRouter>
       </AuthContext.Provider>
