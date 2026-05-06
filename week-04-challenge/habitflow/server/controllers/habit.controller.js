@@ -1,4 +1,4 @@
-const Habit = require('../models/Habit.model')
+const {Habit} = require('../models/Habit.model')
 
 
 //CRUD Controllers
@@ -16,7 +16,10 @@ const getOneHabit = (req, res) => {
             }
             res.json(oneHabit)
         })
-        .catch(err => res.status(500).json(err))
+        .catch(err => {
+            res.status(500).json(err)
+            console.log("Golita")
+        })
 }
 
 const createHabit = (req, res) => {

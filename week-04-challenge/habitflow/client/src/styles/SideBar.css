@@ -1,6 +1,6 @@
 
-button,
-a{
+.buttonSideBar {
+    text-align: left;
     text-decoration: none;
     color: inherit;
     font-size: 15px;
@@ -14,8 +14,7 @@ a{
     width: 100%;
 }
 
-button:hover,
-a:hover {
+.buttonSideBar:hover {
     font-size: 101%;
     background-color: rgb(219, 219, 219);
     transition: all 0.2s ease-in-out;

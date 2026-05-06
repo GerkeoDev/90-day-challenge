@@ -24,6 +24,6 @@ const HabitSchema = new mongoose.Schema({
         type: [Date],
         default: Date.now
     }
-})
+}, {timestamps: true})
 
 module.exports.Habit = mongoose.model('Habit', HabitSchema)

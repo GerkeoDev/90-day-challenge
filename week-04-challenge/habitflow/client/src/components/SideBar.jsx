@@ -26,27 +26,27 @@ const SideBar = props => {
             </div>
             <ul className='mt-2 flex flex-col gap-2'>
                 <li>
-                    <a href="/dashboard" className={currentView === 'dashboard' ? 'active disabled' : ''} >
+                    <a href="/dashboard" className={currentView === 'dashboard' ? 'active disabled buttonSideBar' : 'buttonSideBar'} >
                         <i></i><span>Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/habits" className={currentView === 'habits' ? 'active disabled' : ''}>
+                    <a href="/habits" className={currentView === 'habits' ? 'active disabled buttonSideBar' : 'buttonSideBar'}>
                         <i></i><span>Habits</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/stats" className={currentView === 'stats' ? 'active disabled' : ''}>
+                    <a href="/stats" className={currentView === 'stats' ? 'active disabled buttonSideBar' : 'buttonSideBar'}>
                         <i></i><span>Stats</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/calendar" className={currentView === 'calendar' ? 'active disabled' : ''}>
+                    <a href="/calendar" className={currentView === 'calendar' ? 'active disabled buttonSideBar' : 'buttonSideBar'}>
                         <i></i><span>Calendar</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/profile" className={currentView === 'profile' ? 'active disabled' : ''}>
+                    <a href="/profile" className={currentView === 'profile' ? 'active disabled buttonSideBar' : 'buttonSideBar'}>
                         <i></i><span>Profile</span>
                     </a>
                 </li>
