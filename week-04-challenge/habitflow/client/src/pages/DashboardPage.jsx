@@ -1,10 +1,14 @@
-import HeaderCmp from "../components/HeaderCmp"
+
+import SideBar from "../components/SideBar"
 
 const DashboardPage = () => {
     return (
-        <div>
-            <HeaderCmp />
-            <h1>Dashboard</h1>
+        <div className="flex flex-row">
+            <SideBar currentView={'dashboard'}/>
+            <div className="content">
+                <h1>Dashboard</h1>
+            </div>
+            
         </div>
     )
 }
