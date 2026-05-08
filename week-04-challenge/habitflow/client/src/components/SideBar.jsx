@@ -24,38 +24,45 @@ const SideBar = props => {
                 <div>HabitFlow</div>
                 <i></i>
             </div>
-            <ul className='mt-2 flex flex-col gap-2'>
-                <li>
-                    <a href="/dashboard" className={currentView === 'dashboard' ? 'active disabled buttonSideBar' : 'buttonSideBar'} >
-                        <i></i><span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/habits" className={currentView === 'habits' ? 'active disabled buttonSideBar' : 'buttonSideBar'}>
-                        <i></i><span>Habits</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/stats" className={currentView === 'stats' ? 'active disabled buttonSideBar' : 'buttonSideBar'}>
-                        <i></i><span>Stats</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/calendar" className={currentView === 'calendar' ? 'active disabled buttonSideBar' : 'buttonSideBar'}>
-                        <i></i><span>Calendar</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/profile" className={currentView === 'profile' ? 'active disabled buttonSideBar' : 'buttonSideBar'}>
-                        <i></i><span>Profile</span>
-                    </a>
-                </li>
-                <li>
-                    <button onClick={handleLogout}>
+            <div className='p-2 flex flex-col justify-between h-full'>
+                <ul className='my-2 flex flex-col gap-2'>
+                    <li>
+                        <a href="/dashboard" className={currentView === 'dashboard' ? 'active disabled buttonSideBar' : 'buttonSideBar'} >
+                            <i></i><span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/habits" className={currentView === 'habits' ? 'active disabled buttonSideBar' : 'buttonSideBar'}>
+                            <i></i><span>Habits</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/stats" className={currentView === 'stats' ? 'active disabled buttonSideBar' : 'buttonSideBar'}>
+                            <i></i><span>Stats</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/calendar" className={currentView === 'calendar' ? 'active disabled buttonSideBar' : 'buttonSideBar'}>
+                            <i></i><span>Calendar</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/profile" className={currentView === 'profile' ? 'active disabled buttonSideBar' : 'buttonSideBar'}>
+                            <i></i><span>Profile</span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <div>
+                    <button 
+                        className="buttonSideBar" 
+                        onClick={handleLogout}
+                    >
                         <i></i><span>Logout</span>
                     </button>
-                </li>
-            </ul>
+                </div>
+            </div>
+            
         </div>
     )
 }
