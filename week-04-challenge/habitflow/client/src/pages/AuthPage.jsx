@@ -5,6 +5,7 @@ import { useState } from "react"
 import LoginFormCmp from "../components/LoginFormCmp"
 import RegisterFormCmp from "../components/RegisterFormCmp"
 import HTTPClient from "../utils/HTTPClient"
+import SideBar from "../components/SideBar"
 
 const AuthPage = () => {
     const [currentView, setCurrentView] = useState('Sign In')
@@ -20,14 +21,16 @@ const AuthPage = () => {
             .catch(err => console.log(err))
     }
     return user ? (
-        <div>
-            <HeaderCmp />
-            <div className="w-96 mx-auto flex flex-col gap-5">
-                <h2 className="">My Account</h2>
-                <button 
-                    className="text-red-300 w-full rounded-md p-2 border border-red-300 bg-gray-800 hover:bg-gray-900 transition duration-300"
-                    onClick={handleLogout}
-                >Logout</button>
+        <div className="flex">
+            <SideBar currentView={'account'} />
+            <div className="w-full">
+                <div className="w-96 mx-auto flex flex-col gap-5 px-5 pt-10">
+                    <h2 className="">My Account</h2>
+                    <button 
+                        className="text-white cursor-pointer hover:text-red-300 w-full rounded-md p-2 border hover:border-red-300 bg-gray-800 hover:bg-gray-900 hover:scale-101 transition duration-300"
+                        onClick={handleLogout}
+                    >Logout</button>
+                </div>
             </div>
         </div>
     ) : (

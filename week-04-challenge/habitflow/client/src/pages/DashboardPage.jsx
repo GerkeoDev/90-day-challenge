@@ -9,10 +9,10 @@ const DashboardPage = () => {
     const [showForm, setShowForm] = useState(false)
     const [habits, setHabits] = useState([])
     const { user } = useContext(AuthContext)
+    const client = new HTTPClient()
     useEffect(() => {
         console.log(user)
         console.log(showForm)
-        const client = new HTTPClient()
 
         client.getAllHabits()
             .then(res => setHabits(res.data))
@@ -20,14 +20,20 @@ const DashboardPage = () => {
     }, [])
 
     const createNewHabit = (data) => {
-        const client = new HTTPClient()
         client.createHabit(data)
-            .then(res => console.log(res))
+            .then(res => setHabits(prev => [...prev, res.data]))
             .then(() => setShowForm(false))
             .catch(err => console.log(err))
     }
 
-    const buttonStyle = "text-white w-full rounded-lg p-2 bg-gray-800 hover:bg-gray-900 active:bg-gray-700 cursor-pointer transition duration-300"
+    const deleteHabit = (id) => {
+        window.confirm('Are you sure you want to delete this habit?') &&
+        client.deleteHabit(id)
+            .then(() => setHabits(prev => prev.filter(habit => habit._id !== id)))
+            .catch(err => console.log(err))
+    }
+
+    const buttonStyle = "text-white w-full rounded-lg py-2 px-4 bg-black hover:bg-gray-900 cursor-pointer transition duration-100"
     return (
         <div className="flex flex-row">
             {
@@ -37,33 +43,32 @@ const DashboardPage = () => {
                 />
             }
             <SideBar currentView={'dashboard'}/>
-            <div className="content">
+            <div className="content p-5 w-full">
                 <div className="flex justify-between p-2">
                     <div>
                         <h2>Hello, {user?.userName}!👋</h2>
-                        <p className="text-sm">This is your dashboard</p>
+                        <p className="text-sm">Here you can manage your habits</p>
                     </div>
                     <div>
-                        <button className={buttonStyle} onClick={() => setShowForm(!showForm)}><span className="text-green-300">+</span> New Habit</button>
+                        <button className={buttonStyle} onClick={() => setShowForm(!showForm)}>+ New Habit</button>
                     </div>
                 </div>
-                <div className="w-96 h-screen p-2 border border-gray-100 shadow">
+                <div className="w-96 p-2 mt-5 w-full">
                     <div>
-                        <p className="text-xl">Your habits</p>
+                        <p>Your habits</p>
                     </div>
-                    <hr className="text-gray-100"/>
-                    <ul className="mt-2 flex flex-col gap-2">
+                    <ul className="mt-3 flex flex-col border border-gray-300 rounded-md">
                         {habits.length === 0 && <li>Nothing here</li>}
                         {
                             habits?.map(habit => (
                                 <li key={habit._id}
-                                    className="p-2 rounded-md hover:bg-gray-100 cursor-pointer transition duration-300"
+                                    className="p-4 border-b border-gray-300 hover:bg-gray-300 cursor-pointer transition duration-200 flex justify-between items-center"
                                 >
                                     {habit.title}
                                     <button 
-                                        className="float-right text-red-500 border border-red-500 p-1 rounded-md hover:bg-red-500 hover:text-white"
-                                        onClick={() => console.log("Habit deleted: ",habit._id)}
-                                    >Delete</button>
+                                        className="float-right text-gray-500 px-2.5 pb-0.5 rounded-full hover:bg-black hover:text-white cursor-pointer transition duration-200"
+                                        onClick={() => deleteHabit(habit._id)}
+                                    >x</button>
                                 </li>
                             ))
                         }

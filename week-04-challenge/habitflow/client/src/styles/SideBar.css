@@ -15,7 +15,6 @@
 }
 
 .buttonSideBar:hover {
-    font-size: 101%;
     background-color: rgb(219, 219, 219);
     transition: all 0.2s ease-in-out;
 }

@@ -1,9 +1,15 @@
-
+import { Link, useNavigate } from 'react-router-dom'
 import '../styles/SideBar.css'
 import HTTPClient from '../utils/HTTPClient'
+import { useContext } from 'react'
+import { AuthContext } from '../context/AuthContext'
+import logo from '../assets/fire-icon.svg'
+
 
 const SideBar = props => {
     const { currentView } = props
+    const { setUser } = useContext(AuthContext)
+    const navigate = useNavigate()
 
     const handleLogout = () => {
         if(window.confirm('Are you sure you want to logout?')){
@@ -11,51 +17,52 @@ const SideBar = props => {
             client.logout()
                 .then(res => {
                     console.log(res.data.message)
-                    window.location.href = '/account'
+                    setUser(null)
+                    navigate('/account')
                 })
                 .catch(err => console.log(err))
         }
 
     }
     return (
-        <div className="flex flex-col w-40 h-screen border-r border-gray-300">
-            <div className='p-3 flex gap-3 items-center justify-center text-xl border-b border-gray-300'>
-                <i></i>
-                <div>HabitFlow</div>
+        <div className="flex flex-col w-60 h-screen border-r border-gray-300 sticky top-0">
+            <div className='py-6 flex gap-2 items-center justify-center text-xl'>
+                <i className='h-6 w-6 flex justify-center'><img src={logo} alt="Logo"/></i>
+                <div className='font-bold'>HabitFlow</div>
                 <i></i>
             </div>
-            <div className='p-2 flex flex-col justify-between h-full'>
+            <div className='p-2 pt-0 flex flex-col justify-between h-full'>
                 <ul className='my-2 flex flex-col gap-2'>
                     <li>
-                        <a href="/dashboard" className={currentView === 'dashboard' ? 'active disabled buttonSideBar' : 'buttonSideBar'} >
+                        <Link to="/dashboard" className={currentView === 'dashboard' ? 'active disabled buttonSideBar' : 'buttonSideBar'} >
                             <i></i><span>Dashboard</span>
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/habits" className={currentView === 'habits' ? 'active disabled buttonSideBar' : 'buttonSideBar'}>
+                        <Link to="/habits" className={currentView === 'habits' ? 'active disabled buttonSideBar' : 'buttonSideBar'}>
                             <i></i><span>Habits</span>
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/stats" className={currentView === 'stats' ? 'active disabled buttonSideBar' : 'buttonSideBar'}>
+                        <Link to="/stats" className={currentView === 'stats' ? 'active disabled buttonSideBar' : 'buttonSideBar'}>
                             <i></i><span>Stats</span>
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/calendar" className={currentView === 'calendar' ? 'active disabled buttonSideBar' : 'buttonSideBar'}>
+                        <Link to="/calendar" className={currentView === 'calendar' ? 'active disabled buttonSideBar' : 'buttonSideBar'}>
                             <i></i><span>Calendar</span>
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/profile" className={currentView === 'profile' ? 'active disabled buttonSideBar' : 'buttonSideBar'}>
-                            <i></i><span>Profile</span>
-                        </a>
+                        <Link to="/account" className={currentView === 'account' ? 'active disabled buttonSideBar' : 'buttonSideBar'}>
+                            <i></i><span>My account</span>
+                        </Link>
                     </li>
                     
                 </ul>
                 <div>
                     <button 
-                        className="buttonSideBar" 
+                        className="buttonSideBar border border-gray-300" 
                         onClick={handleLogout}
                     >
                         <i></i><span>Logout</span>
