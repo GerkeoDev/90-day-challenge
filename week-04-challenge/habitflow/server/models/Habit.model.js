@@ -17,7 +17,7 @@ const HabitSchema = new mongoose.Schema({
         default: 'daily'
     },
     completedDates: {
-        type: [Date],
+        type: [String],
         default: []
     },
     createdAt: {
