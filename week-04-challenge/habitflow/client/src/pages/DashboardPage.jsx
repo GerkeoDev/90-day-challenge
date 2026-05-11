@@ -4,6 +4,7 @@ import SideBar from "../components/SideBar"
 import { AuthContext } from "../context/AuthContext"
 import HTTPClient from "../utils/HTTPClient"
 import HabitForm from "../components/HabitForm"
+import dayjs from "dayjs"
 
 const DashboardPage = () => {
     const [showForm, setShowForm] = useState(false)
@@ -34,7 +35,8 @@ const DashboardPage = () => {
     }
 
     const checkHabit = (id) => {
-        client.checkHabit(id)
+        const localDate = dayjs().format('YYYY-MM-DD')
+        client.checkHabit(id, localDate)
             .then(res => console.log(res))
             .catch(err => console.log(err))
     }
@@ -71,7 +73,6 @@ const DashboardPage = () => {
                                     className="p-4 border-b border-gray-300 hover:bg-gray-300 cursor-pointer transition duration-200 flex justify-between items-center"
                                 >
                                     {habit.title}
-                                    {/*Checkbox */}
                                     <input type="checkbox" className="" onChange={() => checkHabit(habit._id)}/>
                                     <button 
                                         className="float-right text-gray-500 px-2.5 pb-0.5 rounded-full hover:bg-black hover:text-white cursor-pointer transition duration-200"

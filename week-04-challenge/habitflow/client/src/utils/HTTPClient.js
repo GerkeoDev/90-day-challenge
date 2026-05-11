@@ -45,9 +45,10 @@ class HTTPClient {
         return this.instance.delete(`/habits/${id}`)
     }
 
-    checkHabit(id){
-        return this.instance.put(`/habits/${id}/check`)
+    checkHabit(id, localDate){
+        return this.instance.put(`/habits/${id}/check`, {localDate: localDate})
     }
+
 }
 
 export default HTTPClient

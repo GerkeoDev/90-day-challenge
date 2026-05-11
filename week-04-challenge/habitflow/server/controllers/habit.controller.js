@@ -1,4 +1,5 @@
 const {Habit} = require('../models/Habit.model')
+const { calculateStreak } = require('../utils/calculateStreak')
 
 
 //CRUD Controllers
@@ -14,11 +15,11 @@ const getOneHabit = (req, res) => {
             if (!oneHabit) {
                 return res.status(404).json({ message: 'Habit not found' })
             }
-            res.json(oneHabit)
+            const stats = calculateStreak(oneHabit.completedDates, oneHabit.frequency)
+            res.json({ ...oneHabit._doc, stats })
         })
         .catch(err => {
             res.status(500).json(err)
-            console.log("Golita")
         })
 }
 
@@ -66,9 +67,9 @@ const deleteHabit = (req, res) => {
 const checkHabit = async (req, res) => {
     try {
         const { id } = req.params
+        
+        const { localDate } = req.body
         const userId = req.user.id
-
-        const today = new Date().toISOString().split('T')[0]
 
         const habit = await Habit.findOne({ _id: id, userId })
 
@@ -76,12 +77,12 @@ const checkHabit = async (req, res) => {
             return res.status(404).json({ message: 'Habit not found' })
         }
 
-        const exists = habit.completedDates.includes(today)
+        const exists = habit.completedDates.includes(localDate)
 
         if (exists) {
-            habit.completedDates = habit.completedDates.filter(date => date !== today)
+            habit.completedDates = habit.completedDates.filter(date => date !== localDate)
         } else {
-            habit.completedDates.push(today)
+            habit.completedDates.push(localDate)
         }
 
         await habit.save()
