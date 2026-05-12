@@ -1,10 +1,7 @@
 import { useState } from "react"
 
-const HabitForm = ({onSubmitProp, onClose}) => {
-    const [form, setForm] = useState({
-        title: '',
-        frequency: 'daily'
-    })
+const HabitForm = ({onSubmitProp, onClose, initialData}) => {
+    const [form, setForm] = useState(initialData)
     const handleChange = e => {
         setForm({
             ...form,

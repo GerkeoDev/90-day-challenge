@@ -8,19 +8,35 @@ import dayjs from "dayjs"
 
 const DashboardPage = () => {
     const [showForm, setShowForm] = useState(false)
+    const initialData = {
+        title: '',
+        frequency: 'daily'
+    }
+    const [habit, setHabit] = useState(initialData)
     const [habits, setHabits] = useState([])
     const { user } = useContext(AuthContext)
     const client = new HTTPClient()
     useEffect(() => {
-        console.log(user)
-        console.log(showForm)
 
         client.getAllHabits()
             .then(res => setHabits(res.data))
             .catch(err => console.log(err))
     }, [])
 
-    const createNewHabit = (data) => {
+    const createOrUpdateHabit = (data) => {
+        if (habit._id) {
+            client.updateHabit(habit._id, data)
+                .then(res => {
+                    setHabits(prev => prev.map(habit => habit._id === res.data._doc._id ? res.data._doc : habit))
+                    console.log(res)
+                })
+                .then(() => {
+                    setShowForm(false)
+                    setHabit(initialData)
+                })
+                .catch(err => console.log(err))
+            return
+        }
         client.createHabit(data)
             .then(res => setHabits(prev => [...prev, res.data]))
             .then(() => setShowForm(false))
@@ -46,8 +62,11 @@ const DashboardPage = () => {
         <div className="flex flex-row">
             {
                 showForm && <HabitForm 
-                    onClose={()=> setShowForm(false)}
-                    onSubmitProp={createNewHabit}
+                    initialData={habit}
+                    onClose={()=> {
+                        setShowForm(false)
+                        setHabit(initialData)}}
+                    onSubmitProp={createOrUpdateHabit}
                 />
             }
             <SideBar currentView={'dashboard'}/>
@@ -71,13 +90,24 @@ const DashboardPage = () => {
                             habits?.map(habit => (
                                 <li key={habit._id}
                                     className="p-4 border-b border-gray-300 hover:bg-gray-300 cursor-pointer transition duration-200 flex justify-between items-center"
-                                >
-                                    {habit.title}
-                                    <input type="checkbox" className="" onChange={() => checkHabit(habit._id)}/>
-                                    <button 
-                                        className="float-right text-gray-500 px-2.5 pb-0.5 rounded-full hover:bg-black hover:text-white cursor-pointer transition duration-200"
-                                        onClick={() => deleteHabit(habit._id)}
-                                    >x</button>
+                                >   
+                                    <div>
+                                        <p>{habit.title}</p>
+                                    </div>
+                                    <div className="flex justify-right gap-2">
+                                        <input type="checkbox" className="" onChange={() => checkHabit(habit._id)}/>
+                                        <button 
+                                            className="text-gray-500 px-1.5 pb-0.5 rounded-sm hover:bg-black hover:text-white cursor-pointer transition duration-200"
+                                            onClick={() => {
+                                                setHabit({...habit, id: habit._id})
+                                                setShowForm(true)
+                                            }}
+                                        >Edit</button>
+                                        <button 
+                                            className="text-gray-500 px-2.5 pb-0.5 rounded-full hover:bg-black hover:text-white cursor-pointer transition duration-200"
+                                            onClick={() => deleteHabit(habit._id)}
+                                        >x</button>
+                                    </div>
                                 </li>
                             ))
                         }

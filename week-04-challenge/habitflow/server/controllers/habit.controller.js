@@ -5,7 +5,20 @@ const { calculateStreak } = require('../utils/calculateStreak')
 //CRUD Controllers
 const getAllHabits = (req, res) => {
     Habit.find({ userId: req.user.id })
-        .then(allHabits => res.json(allHabits))
+        .then(allHabits => {
+            if (!allHabits) {
+                return res.status(404).json({ message: 'No habits found' })
+            } else {
+                const habitWithStats = allHabits.map(habit => {
+                    const stats = calculateStreak(habit.completedDates, habit.frequency)
+                    return {
+                        ...habit._doc,
+                        stats
+                    }
+                })
+                res.json(habitWithStats)
+            }
+        })
         .catch(err => res.status(400).json(err))
 }
 
@@ -45,7 +58,8 @@ const updateHabit = (req, res) => {
             if (!updatedHabit) {
                 return res.status(404).json({ message: 'Habit not found' })
             }
-            res.json(updatedHabit)
+            const stats = calculateStreak(updatedHabit.completedDates, updatedHabit.frequency)
+            res.json({ ...updatedHabit, stats })
         })
         .catch(err => res.status(400).json(err))
 }
@@ -87,7 +101,9 @@ const checkHabit = async (req, res) => {
 
         await habit.save()
 
-        res.json(habit)
+        const stats = calculateStreak(habit.completedDates, habit.frequency)
+
+        res.json({...habit, stats: stats})
 
     } catch (err) {
         res.status(400).json(err)
