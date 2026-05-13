@@ -29,7 +29,7 @@ const getOneHabit = (req, res) => {
                 return res.status(404).json({ message: 'Habit not found' })
             }
             const stats = calculateStreak(oneHabit.completedDates, oneHabit.frequency)
-            res.json({ ...oneHabit._doc, stats })
+            res.json({ ...oneHabit.toObject(), stats })
         })
         .catch(err => {
             res.status(500).json(err)
@@ -43,7 +43,10 @@ const createHabit = (req, res) => {
         title,
         frequency
     })
-        .then(newHabit => res.json(newHabit))
+        .then(newHabit => {
+            const stats = calculateStreak(newHabit.completedDates, newHabit.frequency)
+            res.json({ ...newHabit.toObject(), stats })
+        })
         .catch(err => res.status(400).json(err))
 }
 
@@ -59,7 +62,7 @@ const updateHabit = (req, res) => {
                 return res.status(404).json({ message: 'Habit not found' })
             }
             const stats = calculateStreak(updatedHabit.completedDates, updatedHabit.frequency)
-            res.json({ ...updatedHabit, stats })
+            res.json({ ...updatedHabit.toObject(), stats })
         })
         .catch(err => res.status(400).json(err))
 }
@@ -98,12 +101,12 @@ const checkHabit = async (req, res) => {
         } else {
             habit.completedDates.push(localDate)
         }
-
+        
         await habit.save()
 
         const stats = calculateStreak(habit.completedDates, habit.frequency)
 
-        res.json({...habit, stats: stats})
+        res.json({...habit.toObject(), stats: stats})
 
     } catch (err) {
         res.status(400).json(err)

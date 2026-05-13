@@ -100,7 +100,7 @@ const refresh = (req, res) => {
             userName: payload.userName
         }
 
-        let token = jwt.sign(payload, JWT_SECRET, { expiresIn: '15m' })
+        let token = jwt.sign(payload, JWT_SECRET, { expiresIn: '30m' })
         let refreshToken = jwt.sign(payload, JWT_SECRET, { expiresIn: '30d' })
 
         res.json({ token, refreshToken })
