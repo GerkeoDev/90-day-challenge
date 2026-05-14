@@ -25,20 +25,24 @@ class HTTPClient {
         return this.instance.post('/logout')
     }
 
-    createHabit(data){
-        return this.instance.post('/habits', data)
+    createHabit(data, localDate){
+        return this.instance.post('/habits', data, localDate)
     }
 
-    getAllHabits(){
-        return this.instance.get('/habits')
+    getAllHabits(localDate){
+        return this.instance.get('/habits', {
+            params: {localDate}
+        })
     }
 
-    getOneHabit(id){
-        return this.instance.get(`/habits/${id}`)
+    getOneHabit(id, localDate){
+        return this.instance.get(`/habits/${id}`, {
+            params: {localDate}
+        })
     }
 
-    updateHabit(id, data){
-        return this.instance.put(`/habits/${id}`, data)
+    updateHabit(id, data, localDate){
+        return this.instance.put(`/habits/${id}`, data, localDate)
     }
 
     deleteHabit(id){

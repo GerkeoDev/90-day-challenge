@@ -4,13 +4,15 @@ const { calculateStreak } = require('../utils/calculateStreak')
 
 //CRUD Controllers
 const getAllHabits = (req, res) => {
+    console.log(req.query)
+    const { localDate } = req.query
     Habit.find({ userId: req.user.id })
         .then(allHabits => {
             if (!allHabits) {
                 return res.status(404).json({ message: 'No habits found' })
             } else {
                 const habitWithStats = allHabits.map(habit => {
-                    const stats = calculateStreak(habit.completedDates, habit.frequency)
+                    const stats = calculateStreak(habit.completedDates, habit.frequency, localDate)
                     return {
                         ...habit._doc,
                         stats
@@ -23,12 +25,13 @@ const getAllHabits = (req, res) => {
 }
 
 const getOneHabit = (req, res) => {
+    const { localDate } = req.query
     Habit.findOne({ _id: req.params.id, userId: req.user.id })
         .then(oneHabit => {
             if (!oneHabit) {
                 return res.status(404).json({ message: 'Habit not found' })
             }
-            const stats = calculateStreak(oneHabit.completedDates, oneHabit.frequency)
+            const stats = calculateStreak(oneHabit.completedDates, oneHabit.frequency, localDate)
             res.json({ ...oneHabit.toObject(), stats })
         })
         .catch(err => {
@@ -38,13 +41,14 @@ const getOneHabit = (req, res) => {
 
 const createHabit = (req, res) => {
     const { title, frequency } = req.body
+    const { localDate } = req.body
     Habit.create({
         userId: req.user.id,
         title,
         frequency
     })
         .then(newHabit => {
-            const stats = calculateStreak(newHabit.completedDates, newHabit.frequency)
+            const stats = calculateStreak(newHabit.completedDates, newHabit.frequency, localDate)
             res.json({ ...newHabit.toObject(), stats })
         })
         .catch(err => res.status(400).json(err))
@@ -52,6 +56,7 @@ const createHabit = (req, res) => {
 
 const updateHabit = (req, res) => {
     const { id } = req.params
+    const { localDate } = req.body
     Habit.findOneAndUpdate(
         { _id: id, userId: req.user.id },
         req.body,
@@ -61,7 +66,7 @@ const updateHabit = (req, res) => {
             if (!updatedHabit) {
                 return res.status(404).json({ message: 'Habit not found' })
             }
-            const stats = calculateStreak(updatedHabit.completedDates, updatedHabit.frequency)
+            const stats = calculateStreak(updatedHabit.completedDates, updatedHabit.frequency, localDate)
             res.json({ ...updatedHabit.toObject(), stats })
         })
         .catch(err => res.status(400).json(err))
@@ -104,7 +109,7 @@ const checkHabit = async (req, res) => {
         
         await habit.save()
 
-        const stats = calculateStreak(habit.completedDates, habit.frequency)
+        const stats = calculateStreak(habit.completedDates, habit.frequency, localDate)
 
         res.json({...habit.toObject(), stats: stats})
 

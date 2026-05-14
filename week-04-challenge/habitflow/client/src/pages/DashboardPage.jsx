@@ -20,17 +20,20 @@ const DashboardPage = () => {
     const client = new HTTPClient()
 
     useEffect(() => {
-        client.getAllHabits()
+        const localDate = dayjs().format('YYYY-MM-DD')
+        client.getAllHabits(localDate)
             .then(res => setHabits(res.data))
             .catch(err => console.log(err))
     }, [])
 
-    const createOrUpdateHabit = (data) => {
+    const createOrUpdateHabit = async (data) => {
+        const localDate = dayjs().format('YYYY-MM-DD')
         if (habit._id) {
-            client.updateHabit(habit._id, data)
-                .then(res => {
-                    setHabits(prev => prev.map(habit => habit._id === res.data._id ? res.data : habit))
-                    console.log(res)
+            await client.updateHabit(habit._id, data, localDate)
+                .then(() => {
+                    client.getOneHabit(habit._id, localDate)
+                        .then(res => setHabits(prev => prev.map(habit => habit._id === res.data._id ? res.data : habit)))
+                        .catch(err => console.log(err))
                 })
                 .then(() => {
                     setShowForm(false)
@@ -39,7 +42,7 @@ const DashboardPage = () => {
                 .catch(err => console.log(err))
             return
         }
-        client.createHabit(data)
+        client.createHabit(data, localDate)
             .then(res => setHabits(prev => [...prev, res.data]))
             .then(() => {
                 setShowForm(false)

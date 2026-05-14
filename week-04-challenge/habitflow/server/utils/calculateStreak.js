@@ -1,6 +1,6 @@
 
 
-const calculateStreak = (completedDates, frequency) => {
+const calculateStreak = (completedDates, frequency, localDate) => {
     if (!completedDates.length) {
         return {
             currentStreak: 0,
@@ -18,7 +18,7 @@ const calculateStreak = (completedDates, frequency) => {
         return Math.abs((d1 - d2) / (1000 * 60 * 60 * 24))
     }
 
-    const today = new Date().toISOString().slice(0, 10)
+    const today = localDate
     const completedToday = completedDates.includes(today)
 
 
