@@ -4,7 +4,6 @@ const { calculateStreak } = require('../utils/calculateStreak')
 
 //CRUD Controllers
 const getAllHabits = (req, res) => {
-    console.log(req.query)
     const { localDate } = req.query
     Habit.find({ userId: req.user.id })
         .then(allHabits => {

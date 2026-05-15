@@ -16,20 +16,18 @@ const HabitForm = ({onSubmitProp, onClose, initialData}) => {
             frequency: 'daily'
         })
     }
+    const buttonStyle = "text-white w-full rounded-lg py-2 px-4 bg-black active:bg-gray-900 border border-white hover:border-black cursor-pointer transition duration-100"
     return (
-        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50"> {/* Overlay */}
-
-            <div className="bg-white p-8 rounded-lg">{/* Modal */}
+        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50">
+            <div className="bg-white p-8 rounded-lg">
                 <h2>Create a new Habit</h2>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-2">
                     <div className="flex flex-col">
-                        {/* <label>Name of the Habit</label> */}
                         <input type="text" name="title" onChange={handleChange} value={form.title} required placeholder="Habit" 
                             className="border border-gray-300 p-1 focus:outline-none rounded-md"
                         />
                     </div>
                     <div className="flex flex-col">
-                        {/* <label>Frequency</label> */}
                         <select name="frequency" onChange={handleChange} value={form.frequency} required placeholder="Frequency" 
                             className="border border-gray-300 p-1 focus:outline-none rounded-md"
                         >
@@ -38,8 +36,8 @@ const HabitForm = ({onSubmitProp, onClose, initialData}) => {
                         </select>
                     </div>
                     <div className="flex justify-between">
-                        <button className="bg-gray-300 rounded-md py-1 px-2 hover:bg-gray-400 hover:text-white cursor-pointer" onClick={onClose}>Close</button>
-                        <button type="submit" className="bg-gray-300 rounded-md py-1 px-2 hover:bg-gray-400 hover:text-white cursor-pointer" type="submit">Submit</button>
+                        <button className={buttonStyle} onClick={onClose}>Close</button>
+                        <button type="submit" className={buttonStyle} type="submit">Submit</button>
                     </div>
                 </form>
             </div>

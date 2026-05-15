@@ -19,4 +19,4 @@ app.use('/api/', oAuthRouter)
 const { habitRouter } = require('./routes/habit.routes')
 app.use('/api/', habitRouter)
 
-app.listen(PORT, ()=> console.log(`Listening on port: ${PORT}`))
+app.listen(PORT, ()=> console.log(`Listening on port: ${PORT} \nDate: ${new Date().toString()}`))

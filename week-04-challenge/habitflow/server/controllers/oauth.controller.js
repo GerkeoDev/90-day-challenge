@@ -68,7 +68,7 @@ const login = async (req, res) => {
                 userName: user.userName
             }
 
-            let token = jwt.sign(payload, JWT_SECRET, { expiresIn: '15m' })
+            let token = jwt.sign(payload, JWT_SECRET, { expiresIn: '30m' })
             let refreshToken = jwt.sign(payload, JWT_SECRET, { expiresIn: '30d' })
 
             res.cookie('token', token, { httpOnly: true })

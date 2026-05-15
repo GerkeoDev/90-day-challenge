@@ -1,29 +1,36 @@
-
 import { useContext, useEffect, useState } from "react"
-import SideBar from "../components/SideBar"
 import { AuthContext } from "../context/AuthContext"
+import { useNavigate } from "react-router-dom"
+
+import SideBar from "../components/SideBar"
 import HTTPClient from "../utils/HTTPClient"
 import HabitForm from "../components/HabitForm"
 import dayjs from "dayjs"
 import CreatedConfirmation from "../components/CreatedConfirmation"
 
 const DashboardPage = () => {
-    const [showForm, setShowForm] = useState(false)
-    const [createdConfirmation, setCreatedConfirmation] = useState(false)
     const initialData = {
         title: '',
         frequency: 'daily'
     }
+    const [showForm, setShowForm] = useState(false)
+    const [createdConfirmation, setCreatedConfirmation] = useState(false)
     const [habit, setHabit] = useState(initialData)
     const [habits, setHabits] = useState([])
+    const [loading, setLoading] = useState(true)
+
     const { user } = useContext(AuthContext)
+    const navigate = useNavigate()
+
     const client = new HTTPClient()
+    
 
     useEffect(() => {
         const localDate = dayjs().format('YYYY-MM-DD')
         client.getAllHabits(localDate)
             .then(res => setHabits(res.data))
             .catch(err => console.log(err))
+            .finally(() => setLoading(false))
     }, [])
 
     const createOrUpdateHabit = async (data) => {
@@ -67,9 +74,11 @@ const DashboardPage = () => {
             .catch(err => console.log(err))
     }
 
-    const buttonStyle = "text-white w-full rounded-lg py-2 px-4 bg-black hover:bg-gray-900 cursor-pointer transition duration-100"
-    const checkedStyle = "w-5 h-5 border border-gray-300 rounded-full bg-green-500"
-    const uncheckedStyle = "w-5 h-5 border border-gray-300 rounded-full"
+    if (loading) return <div></div>
+
+    const buttonStyle = "text-white w-full rounded-lg py-2 px-4 bg-black active:opacity-95 border border-white hover:border-black cursor-pointer transition duration-100"
+    const checkedStyle = "w-5 h-5 border border-gray-300 rounded-full bg-green-500 cursor-pointer"
+    const uncheckedStyle = "w-5 h-5 border border-gray-300 rounded-full cursor-pointer"
     return (
         <div className="flex flex-row">
             {
@@ -104,7 +113,8 @@ const DashboardPage = () => {
                         {
                             habits?.map(habit => (
                                 <li key={habit._id}
-                                    className="p-4 border-b border-gray-300 hover:bg-gray-300 cursor-pointer transition duration-200 flex justify-between items-center"
+                                    onClick={() => navigate(`/habits/${habit._id}`)}
+                                    className="p-4 border-b border-gray-300 hover:bg-gray-300 cursor-pointer active:scale-99 transition duration-200 flex justify-between items-center"
                                 >   
                                     <div className="flex justify-left gap-1 items-end text-sm w-1/3">
                                         <p>{habit.title}</p>
@@ -114,25 +124,30 @@ const DashboardPage = () => {
                                     </div>
                                     <div className="flex flex-col gap-1 items-end text-sm">
                                         <div>Streak</div>
-                                        <div>{habit.stats.currentStreak} days</div>
+                                        <div>{habit.stats.currentStreak} {habit.frequency === 'daily' ? 'days' : 'weeks'}</div>
                                     </div>
                                     <div className="flex justify-right gap-2 items-center text-sm">
                                         <input 
                                             type="checkbox" 
                                             checked={habit.stats.completedToday}
                                             className={habit.stats.completedToday ? checkedStyle : uncheckedStyle}
+                                            onClick={e => e.stopPropagation()}
                                             onChange={() => checkHabit(habit._id)}
                                         />
                                         <button 
                                             className="text-gray-500 px-1.5 pb-0.5 rounded-sm hover:bg-black hover:text-white cursor-pointer transition duration-200"
-                                            onClick={() => {
+                                            onClick={e => {
+                                                e.stopPropagation()
                                                 setHabit({...habit, id: habit._id})
                                                 setShowForm(true)
                                             }}
                                         >Edit</button>
                                         <button 
                                             className="text-gray-500 px-2.5 pb-0.5 rounded-full hover:bg-black hover:text-white cursor-pointer transition duration-200"
-                                            onClick={() => deleteHabit(habit._id)}
+                                            onClick={e => {
+                                                e.stopPropagation()
+                                                deleteHabit(habit._id)
+                                            }}
                                         >x</button>
                                     </div>
                                 </li>

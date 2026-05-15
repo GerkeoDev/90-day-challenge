@@ -1,16 +1,20 @@
+import { Link } from "react-router-dom"
+import logo from '../assets/fire-icon.svg'
+
 const HeaderCmp = () => {
     return (
-        <div>
-            <div className="flex justify-between p-10">
-                <span>
-                    <a href="/">HabitFlow</a>
-                </span>
-                <span className="flex gap-5">
-                    <a href="/">Home</a>
-                    <a href="/about">About</a>
-                    <a href="/service">Service</a>
-                    <a href="/contact">Contact</a>
-                </span>
+        <div className="border-b border-gray-300 mb-4">
+            <div className="flex justify-between items-center p-5">
+                <Link to="/" className="text-sm flex gap-2">
+                    <div className='h-5 w-5 flex justify-center'><img src={logo} alt="Logo"/></div>
+                    HabitFlow
+                </Link>
+
+                <div className="flex gap-6 text-sm">
+                    <Link to="/">Home</Link>
+                    {/* <Link to="/about">About</Link> */}
+                    <Link to="/account">Login</Link>
+                </div>
             </div>
         </div>
     )

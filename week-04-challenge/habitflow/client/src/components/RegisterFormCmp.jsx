@@ -29,7 +29,7 @@ const RegisterFormCmp = (props) => {
     }
 
     const inputStyle = "border border-gray-300 rounded-md p-2"
-    const buttonStyle = "text-white w-full rounded-md p-2 border border-gray-300 bg-gray-800 hover:bg-gray-900 transition duration-300"
+    const buttonStyle = "text-white w-full cursor-pointer rounded-md p-2 border border-white hover:border-black bg-black hover:opacity-95 transition duration-300"
     return (
         <div>
             <h2>Register</h2>
@@ -66,8 +66,8 @@ const RegisterFormCmp = (props) => {
             </form>
             <hr className="m-3"/>
             <div className="flex flex-col gap-4 m-3">
-                <p>Do you have an account?</p>
-                <button onClick={() =>changeCurrectView('Sign In')} className={buttonStyle}>Sign In</button>
+                <p className="text-sm">Do you have an account?</p>
+                <button onClick={() => changeCurrectView('Sign In')} className={buttonStyle}>Sign In</button>
             </div>
         </div>
     )
