@@ -8,10 +8,17 @@ const JWT_SECRET = process.env.JWT_SECRET
 const register = async (req, res) => {
     let userData = req.body
     try {
+        const errors = {}
         let existUserWithSameEmail = await User.exists({ email: userData.email })
         let existUserWithSameName = await User.exists({ userName: userData.userName })
 
-        const errors = {}
+        if (!userData.email || !userData.password || !userData.userName) {
+            errors.message = "Missing required fields"
+            return res.status(400).json({
+                success: false,
+                errors
+            })
+        }
 
         if (existUserWithSameEmail) {
             errors.email = "The email already exists"
@@ -21,8 +28,41 @@ const register = async (req, res) => {
             errors.userName = "The user name already exists"
         }
 
+        if(userData.userName.length < 3){
+            errors.userName = 'User name must be at least 3 characters long'
+        }
+        if(userData.userName.length > 20){
+            errors.userName = 'User name must be less than 20 characters long'
+        }
+        if(userData.userName.includes(' ')){
+            errors.userName = 'User name cannot contain spaces'
+        }
+
+        if(userData.email.includes(' ')){
+            errors.email = 'Email cannot contain spaces'
+        }
+        if(!userData.email.includes('@') || !userData.email.includes('.')){
+            errors.email = 'Invalid email address'
+        }
+        if(userData.email.length > 50){
+            errors.email = 'Email must be less than 50 characters long'
+        }
+        if(userData.email.length < 5){
+            errors.email = 'Email must be at least 5 characters long'
+        }
+
+        if(userData.password.length > 50){
+            errors.password = 'Password must be less than 50 characters long'
+        }
+        if(userData.password.length < 8){
+            errors.password = 'Password must be at least 8 characters long'
+        }
+        
         if (Object.keys(errors).length > 0) {
-            return res.status(500).json({ errors })
+            return res.status(400).json({
+                success: false,
+                errors
+            })
         }
 
         let hashedPassword = await new Promise((resolve, reject) => {
@@ -38,16 +78,25 @@ const register = async (req, res) => {
             password: hashedPassword
         })
         await user.save()
-        res.json({user})
+        res.json({
+            success: true,
+            user
+        })
     } catch (error) {
         if (error instanceof mongoose.Error.ValidationError) {
             let errors = {}
             Object.keys(error.errors).map((key) => {
                 errors[key] = error.errors[key].message
             })
-            res.status(400).json({ errors: errors})
+            res.status(400).json({
+                success: false,
+                errors
+            })
         } else {
-            res.status(500).json({ error: error.toString() })
+            res.status(500).json({
+                success: false,
+                errors: error.toString()
+            })
         }
     }
 }
