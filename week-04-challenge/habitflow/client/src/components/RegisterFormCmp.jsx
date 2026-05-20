@@ -47,7 +47,7 @@ const RegisterFormCmp = (props) => {
         
     }
 
-    const inputStyle = "border border-gray-300 rounded-md p-2 w-full"
+    const inputStyle = "border border-gray-300 rounded-md p-2 w-full focus:outline-none"
     const buttonStyle = "text-white w-full cursor-pointer rounded-md p-2 border border-white hover:border-black bg-black hover:opacity-95 transition duration-300"
     return (
         <div>

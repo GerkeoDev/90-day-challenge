@@ -1,14 +1,15 @@
 const {User} = require('../models/User.model')
-const mongoose = require('mongoose')
+const { validateLogin, validateRegister } = require('../validators/auth.validator')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const mongoose = require('mongoose')
 
 const JWT_SECRET = process.env.JWT_SECRET
 
 const register = async (req, res) => {
     let userData = req.body
     try {
-        const errors = {}
+        const errors = validateRegister(userData)
         let existUserWithSameEmail = await User.exists({ email: userData.email })
         let existUserWithSameName = await User.exists({ userName: userData.userName })
 
@@ -28,36 +29,6 @@ const register = async (req, res) => {
             errors.userName = "The user name already exists"
         }
 
-        if(userData.userName.length < 3){
-            errors.userName = 'User name must be at least 3 characters long'
-        }
-        if(userData.userName.length > 20){
-            errors.userName = 'User name must be less than 20 characters long'
-        }
-        if(userData.userName.includes(' ')){
-            errors.userName = 'User name cannot contain spaces'
-        }
-
-        if(userData.email.includes(' ')){
-            errors.email = 'Email cannot contain spaces'
-        }
-        if(!userData.email.includes('@') || !userData.email.includes('.')){
-            errors.email = 'Invalid email address'
-        }
-        if(userData.email.length > 50){
-            errors.email = 'Email must be less than 50 characters long'
-        }
-        if(userData.email.length < 5){
-            errors.email = 'Email must be at least 5 characters long'
-        }
-
-        if(userData.password.length > 50){
-            errors.password = 'Password must be less than 50 characters long'
-        }
-        if(userData.password.length < 8){
-            errors.password = 'Password must be at least 8 characters long'
-        }
-        
         if (Object.keys(errors).length > 0) {
             return res.status(400).json({
                 success: false,
@@ -104,10 +75,24 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     let data = req.body
     try {
+        const errors = validateLogin(data)
+
+        if (Object.keys(errors).length > 0) {
+            return res.status(400).json({
+                success: false,
+                errors
+            })
+        }
+
         let user = await User.findOne({ email: data.email })
 
         if (!user) {
-            return res.status(400).json({ error: 'Invalid credentials' })
+            return res.status(400).json({ 
+                success: false,
+                errors: {
+                    message: 'Invalid credentials'
+                }
+            })
         }
 
         let samePassword = await bcrypt.compareSync(data.password, user.password)
@@ -129,13 +114,28 @@ const login = async (req, res) => {
 
             res.json({ user: payload, token, refreshToken })
         } else {
-            res.status(400).json({ error: 'Invalid credentials' })
+            res.status(400).json({ 
+                success: false,
+                errors: {
+                    message: 'Invalid credentials'
+                }
+            })
         }
     } catch (error) {
         if (error instanceof mongoose.Error.ValidationError) {
-            res.status(400).json({ error: error.toString() })
+            res.status(400).json({ 
+                success: false,
+                errors: {
+                    message: error.toString()
+                }
+            })
         } else {
-            res.status(500).json({ error: error.toString() })
+            res.status(500).json({ 
+                success: false,
+                errors: {
+                    message: error.toString()
+                }
+            })
         }
     }
 }
