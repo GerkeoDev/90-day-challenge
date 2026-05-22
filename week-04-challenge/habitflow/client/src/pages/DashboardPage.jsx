@@ -119,9 +119,9 @@ const DashboardPage = () => {
                                     <div className="flex justify-left gap-1 items-end text-sm w-1/3">
                                         <p>{habit.title}</p>
                                     </div>
-                                    <div className="flex flex-col gap-1 items-end text-sm">
+                                    {/* <div className="flex flex-col gap-1 items-end text-sm">
                                         <p>{habit.frequency.charAt(0).toUpperCase() + habit.frequency.slice(1)}</p>
-                                    </div>
+                                    </div> */}
                                     <div className="flex flex-col gap-1 items-end text-sm">
                                         <div>Streak</div>
                                         <div>{habit.stats.currentStreak} {habit.frequency === 'daily' ? 'days' : 'weeks'}</div>
