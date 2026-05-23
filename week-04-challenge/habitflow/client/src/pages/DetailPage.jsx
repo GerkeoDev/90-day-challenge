@@ -5,6 +5,7 @@ import HTTPClient from "../utils/HTTPClient"
 import SideBar from "../components/SideBar"
 import check from '../assets/svgs/circle-check.svg'
 import x from '../assets/svgs/x.svg'
+import LoadingPage from "./LoadingPage"
 
 const DetailPage = () => {
     const { id } = useParams()
@@ -21,7 +22,7 @@ const DetailPage = () => {
         client.getOneHabit(id, localDate)
             .then(res => setHabit(res.data))
             .catch(err => console.log(err))
-            .finally(() => setLoading(false))
+            .finally(() => setTimeout(() => setLoading(false), 800))
     }, [])
 
     const checkToday = () => {
@@ -30,7 +31,7 @@ const DetailPage = () => {
             .catch(err => console.log(err))
     }
 
-    if (loading) return <div></div>
+    if (loading) return <LoadingPage />
 
     if (!habit) {
         return (

@@ -8,6 +8,7 @@ import DashboardPage from './pages/DashboardPage'
 import AuthPage from './pages/AuthPage'
 import DetailPage from './pages/DetailPage'
 import HabitsPage from './pages/HabitsPage'
+import LoadingPage from './pages/LoadingPage'
 
 const PageRouter = () => {
   const [user, setUser] = useState(null)
@@ -21,10 +22,10 @@ const PageRouter = () => {
         setUser(null)
         console.log('not logged in')
       })
-      .finally(() => setLoading(false))
+      .finally(() => setTimeout(() => setLoading(false), 800))
   }, [])
 
-  if (loading) return <div></div>//<LoadingPage />
+  if (loading) return <LoadingPage />
 
   return (
     <>
