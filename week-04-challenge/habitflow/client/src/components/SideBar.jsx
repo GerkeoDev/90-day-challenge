@@ -30,6 +30,16 @@ const SideBar = props => {
         }
 
     }
+
+    const changeTheme = () => {
+        const client = new HTTPClient()
+        client.changeTheme('dark')
+            .then(res => {
+                console.log(res.data.message)
+            })
+            .catch(err => console.log(err))
+    }
+
     return (
         <div className="flex flex-col w-[185px] h-screen border-r border-gray-300 sticky top-0">
             <div className='py-6 flex gap-2 items-center justify-center text-xl'>
@@ -54,7 +64,14 @@ const SideBar = props => {
                             <i className='h-4 w-4 flex justify-center'><img src={userSvg} alt="Logo"/></i><span>My account</span>
                         </Link>
                     </li>
-                    
+                    <li>
+                        <button 
+                            className="buttonSideBar border border-gray-300" 
+                            onClick={changeTheme}
+                        >
+                            <i className='h-4 w-4 flex justify-center'><img src={logo} alt="Logo"/></i><span>Change Theme</span>
+                        </button>
+                    </li>
                 </ul>
                 <div>
                     <button 

@@ -57,6 +57,10 @@ class HTTPClient {
         return this.instance.put(`/habits/${id}/check`, {localDate: localDate})
     }
 
+    changeTheme(theme){
+        return this.instance.put('/theme', {theme})
+    }
+
 }
 
 export default HTTPClient

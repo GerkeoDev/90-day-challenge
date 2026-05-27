@@ -16,6 +16,9 @@ app.use(express.urlencoded({extended: true}))
 const { oAuthRouter } = require('./routes/oauth.routes')
 app.use('/api/', oAuthRouter)
 
+const { userRouter } = require('./routes/user.routes')
+app.use('/api/', userRouter)
+
 const { habitRouter } = require('./routes/habit.routes')
 app.use('/api/', habitRouter)
 
