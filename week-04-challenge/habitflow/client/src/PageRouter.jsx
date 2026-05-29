@@ -13,11 +13,13 @@ import LoadingPage from './pages/LoadingPage'
 const PageRouter = () => {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
+  const client = new HTTPClient()
 
   useEffect(() => {
-    const client = new HTTPClient()
     client.me()
-      .then(res => setUser(res.data))
+      .then(res => {
+        setUser(res.data)
+      })
       .catch(() => {
         setUser(null)
         console.log('not logged in')
