@@ -76,11 +76,9 @@ const DashboardPage = () => {
 
     if (loading) return <div></div>
 
-    const buttonStyle = "text-white w-full rounded-lg py-2 px-4 bg-black active:opacity-95 border border-white hover:border-black cursor-pointer transition duration-100"
-    const checkedStyle = "w-5 h-5 border border-gray-300 rounded-full bg-green-500 cursor-pointer"
-    const uncheckedStyle = "w-5 h-5 border border-gray-300 rounded-full cursor-pointer"
+    const buttonStyle = "text-black rounded-xl font-semibold text-sm py-3 px-5 active:scale-[0.98] bg-white hover:opacity-90 cursor-pointer transition duration-100"
     return (
-        <div className="flex flex-row">
+        <div className="min-h-screen bg-[#0f1115] text-white flex flex-row">
             {
                 showForm && <HabitForm 
                     initialData={habit}
@@ -94,48 +92,72 @@ const DashboardPage = () => {
                 createdConfirmation && <CreatedConfirmation setCreatedConfirmation={setCreatedConfirmation} />
             }
             <SideBar currentView={'dashboard'}/>
-            <div className="content p-5 w-full">
-                <div className="flex justify-between p-2">
+            <div className="flex-1 p-8">
+                <div className="flex justify-between items-center mb-8">
                     <div>
                         <h2>Hello, {user?.userName}!👋</h2>
-                        <p className="text-sm">Here you can manage your habits</p>
+                        <p className="text-sm text-gray-400">Here you can manage your habits</p>
                     </div>
                     <div>
                         <button className={buttonStyle} onClick={() => setShowForm(!showForm)}>+ New Habit</button>
                     </div>
                 </div>
-                <div className="w-96 p-2 mt-5 w-full">
+                <div className="w-full">
                     <div>
                         <p>Your habits</p>
                     </div>
-                    <ul className="mt-3 flex flex-col border border-gray-300 rounded-md">
+                    <ul className="mt-4 flex flex-col gap-4">
                         {habits.length === 0 && <li>Nothing to see here</li>}
                         {
                             habits?.map(habit => (
                                 <li key={habit._id}
                                     onClick={() => navigate(`/habits/${habit._id}`)}
-                                    className="p-4 border-b border-gray-300 hover:bg-gray-300 cursor-pointer active:scale-99 transition duration-200 flex justify-between items-center"
+                                    className="
+                                        bg-[#111827]/90
+                                        p-5
+                                        rounded-3xl
+                                        border border-white/10
+                                        hover:bg-white/[0.07] 
+                                        cursor-pointer
+                                        transition 
+                                        duration-200 
+                                        flex 
+                                        justify-between 
+                                        items-center
+                                        backdrop-blur-xl
+                                    "
                                 >   
                                     <div className="flex justify-left gap-1 items-end text-sm w-1/3">
-                                        <p>{habit.title}</p>
+                                        <p className="text-white font-medium text-lg">
+                                            {habit.title}
+                                        </p>
                                     </div>
-                                    {/* <div className="flex flex-col gap-1 items-end text-sm">
-                                        <p>{habit.frequency.charAt(0).toUpperCase() + habit.frequency.slice(1)}</p>
-                                    </div> */}
-                                    <div className="flex flex-col gap-1 items-end text-sm">
-                                        <div>Streak</div>
-                                        <div>{habit.stats.currentStreak} {habit.frequency === 'daily' ? 'days' : 'weeks'}</div>
+                                    <div className="flex flex-col items-end">
+                                        <span className="text-xs text-gray-500 uppercase tracking-wide">Streak</span>
+                                        <span className="text-white font-semibold">{habit.stats.currentStreak} days</span>
                                     </div>
-                                    <div className="flex justify-right gap-2 items-center text-sm">
+                                    <div className="flex justify-right gap-3 items-center text-sm">
                                         <input 
                                             type="checkbox" 
                                             checked={habit.stats.completedToday}
-                                            className={habit.stats.completedToday ? checkedStyle : uncheckedStyle}
+                                            className=" w-5 h-5 accent-green-500 cursor-pointer"
                                             onClick={e => e.stopPropagation()}
                                             onChange={() => checkHabit(habit._id)}
                                         />
                                         <button 
-                                            className="text-gray-500 px-1.5 pb-0.5 rounded-sm hover:bg-black hover:text-white cursor-pointer transition duration-200"
+                                            className="
+                                                border border-white/5
+                                                bg-white/5
+                                                text-gray-300 
+                                                px-3 py-2
+                                                rounded-xl
+                                                hover:bg-white/10
+                                                hover:text-white 
+                                                cursor-pointer 
+                                                transition 
+                                                duration-200
+                                                active:scale-[0.98]
+                                            "
                                             onClick={e => {
                                                 e.stopPropagation()
                                                 setHabit({...habit, id: habit._id})
@@ -143,7 +165,18 @@ const DashboardPage = () => {
                                             }}
                                         >Edit</button>
                                         <button 
-                                            className="text-gray-500 px-2.5 pb-0.5 rounded-full hover:bg-black hover:text-white cursor-pointer transition duration-200"
+                                            className="
+                                                text-red-300
+                                                bg-red-500/5
+                                                border border-red-500/10
+                                                px-3 py-2 
+                                                rounded-xl 
+                                                hover:bg-red-500/10 
+                                                cursor-pointer 
+                                                transition 
+                                                duration-200
+                                                active:scale-[0.98]
+                                            "
                                             onClick={e => {
                                                 e.stopPropagation()
                                                 deleteHabit(habit._id)
