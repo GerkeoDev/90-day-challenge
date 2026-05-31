@@ -64,9 +64,10 @@ const SideBar = props => {
                                     text-sm
                                     transition
                                     duration-200
+                                    hover:shadow-[0_6px_20px_rgba(255,255,255,0.07)]
                                     ${
                                         currentView === 'dashboard'
-                                            ? 'bg-white/10 text-white border border-white/10'
+                                            ? 'bg-white/10 text-white border border-white/10 shadow-[0_4px_16px_rgba(255,255,255,0.07)]'
                                             : 'text-gray-400 hover:bg-white/5 hover:text-white'
                                     }`
                                 }>
@@ -84,9 +85,10 @@ const SideBar = props => {
                                     text-sm
                                     transition
                                     duration-200
+                                    hover:shadow-[0_6px_20px_rgba(255,255,255,0.07)]
                                     ${
                                         currentView === 'habits'
-                                            ? 'bg-white/10 text-white border border-white/10'
+                                            ? 'bg-white/10 text-white border border-white/10 shadow-[0_4px_16px_rgba(255,255,255,0.07)]'
                                             : 'text-gray-400 hover:bg-white/5 hover:text-white'
                                     }`
                                 }>
@@ -104,9 +106,10 @@ const SideBar = props => {
                                     text-sm
                                     transition
                                     duration-200
+                                    hover:shadow-[0_6px_20px_rgba(255,255,255,0.07)]
                                     ${
                                         currentView === 'account'
-                                            ? 'bg-white/10 text-white border border-white/10'
+                                            ? 'bg-white/10 text-white border border-white/10 shadow-[0_4px_16px_rgba(255,255,255,0.07)]'
                                             : 'text-gray-400 hover:bg-white/5 hover:text-white'
                                     }`
                                 }>
@@ -130,6 +133,7 @@ const SideBar = props => {
                             transition
                             duration-200
                             cursor-pointer
+                            hover:shadow-[0_6px_20px_rgba(255,0,0,0.07)]
                         " 
                         onClick={handleLogout}
                     >

@@ -62,6 +62,8 @@ const HabitForm = ({onSubmitProp, onClose, initialData}) => {
                                 hover:bg-white/10
                                 hover:text-white
                                 cursor-pointer
+                                shadow-[0_4px_16px_rgba(255,255,255,0.07)]
+                                hover:shadow-[0_6px_20px_rgba(255,255,255,0.07)]
                             "
                         >Close</button>
                         <button 
@@ -79,6 +81,8 @@ const HabitForm = ({onSubmitProp, onClose, initialData}) => {
                                 hover:opacity-90
                                 active:scale-[0.98]
                                 cursor-pointer
+                                shadow-[0_4px_16px_rgba(255,255,255,0.07)]
+                                hover:shadow-[0_6px_20px_rgba(255,255,255,0.07)]
                             "
                         >Submit</button>
                     </div>

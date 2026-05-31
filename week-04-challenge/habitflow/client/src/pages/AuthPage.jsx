@@ -30,17 +30,19 @@ const AuthPage = () => {
                         <div className="text-sm text-gray-400 mb-6">Manage your session</div>
                         <button 
                             className="
-                                text-black
+                                text-red-300
                                 font-semibold
                                 cursor-pointer 
                                 w-full 
                                 rounded-xl 
-                                py-3 
-                                border hover:border-white 
-                                bg-white 
+                                py-3
+                                bg-red-500/10
                                 hover:opacity-90
+                                hover:scale-[1.01]
                                 active:scale-[0.98]
                                 transition duration-200
+                                shadow-[0_4px_16px_rgba(255,0,0,0.07)]
+                                hover:shadow-[0_6px_20px_rgba(255,0,0,0.1)]
                             "
                             onClick={handleLogout}
                         >Logout</button>

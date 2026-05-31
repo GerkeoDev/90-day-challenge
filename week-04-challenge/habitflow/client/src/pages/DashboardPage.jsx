@@ -76,7 +76,6 @@ const DashboardPage = () => {
 
     if (loading) return <div></div>
 
-    const buttonStyle = "text-black rounded-xl font-semibold text-sm py-3 px-5 active:scale-[0.98] bg-white hover:opacity-90 cursor-pointer transition duration-100"
     return (
         <div className="min-h-screen bg-[#0f1115] text-white flex flex-row">
             {
@@ -99,7 +98,20 @@ const DashboardPage = () => {
                         <p className="text-sm text-gray-400">Here you can manage your habits</p>
                     </div>
                     <div>
-                        <button className={buttonStyle} onClick={() => setShowForm(!showForm)}>+ New Habit</button>
+                        <button 
+                            className="
+                                text-black 
+                                rounded-xl 
+                                font-semibold text-sm 
+                                py-3 px-5 
+                                active:scale-[0.98] 
+                                bg-white 
+                                hover:opacity-90 
+                                cursor-pointer 
+                                transition duration-100
+                                shadow-[0_8px_32px_rgba(255,255,255,0.1)]
+                                hover:shadow-[0_12px_40px_rgba(255,255,255,0.1)]
+                        " onClick={() => setShowForm(!showForm)}>+ New Habit</button>
                     </div>
                 </div>
                 <div className="w-full">
@@ -125,6 +137,8 @@ const DashboardPage = () => {
                                         justify-between 
                                         items-center
                                         backdrop-blur-xl
+                                        shadow-[0_8px_32px_rgba(255,255,255,0.03)]
+                                        hover:shadow-[0_12px_40px_rgba(255,255,255,0.03)]
                                     "
                                 >   
                                     <div className="flex justify-left gap-1 items-end text-sm w-1/3">
@@ -140,7 +154,7 @@ const DashboardPage = () => {
                                         <input 
                                             type="checkbox" 
                                             checked={habit.stats.completedToday}
-                                            className=" w-5 h-5 accent-green-500 cursor-pointer"
+                                            className="w-5 h-5 accent-green-500 cursor-pointer"
                                             onClick={e => e.stopPropagation()}
                                             onChange={() => checkHabit(habit._id)}
                                         />

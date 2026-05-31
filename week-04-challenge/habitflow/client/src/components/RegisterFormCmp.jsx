@@ -135,12 +135,13 @@ const RegisterFormCmp = () => {
                         cursor-pointer 
                         w-full 
                         rounded-xl 
-                        py-3 
-                        border hover:border-white 
+                        py-3
                         bg-white 
                         hover:opacity-90
                         active:scale-[0.98]
                         transition duration-200
+                        shadow-[0_8px_32px_rgba(255,255,255,0.1)]
+                        hover:shadow-[0_12px_40px_rgba(255,255,255,0.1)]
                     "
                 >Register</button>
             </form>
