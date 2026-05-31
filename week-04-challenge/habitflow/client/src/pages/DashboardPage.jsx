@@ -107,13 +107,13 @@ const DashboardPage = () => {
                         <p>Your habits</p>
                     </div>
                     <ul className="mt-4 flex flex-col gap-4">
-                        {habits.length === 0 && <li>Nothing to see here</li>}
+                        {habits.length === 0 && <li className="text-sm text-gray-400">Nothing to see here</li>}
                         {
                             habits?.map(habit => (
                                 <li key={habit._id}
                                     onClick={() => navigate(`/habits/${habit._id}`)}
                                     className="
-                                        bg-[#111827]/90
+                                        bg-white/5
                                         p-5
                                         rounded-3xl
                                         border border-white/10

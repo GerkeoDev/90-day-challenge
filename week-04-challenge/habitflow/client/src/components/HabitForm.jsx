@@ -46,6 +46,7 @@ const HabitForm = ({onSubmitProp, onClose, initialData}) => {
                     </div>
                     <div className="flex gap-3 mt-2">
                         <button 
+                            type="button"
                             onClick={onClose}
                             className="
                                 w-full
