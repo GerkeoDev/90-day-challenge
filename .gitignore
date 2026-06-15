@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+.env.*
+
+# AI Methodology / Private workflow
+AGENT.md
+.clinerules
+.skills/
+.memory/
+spec/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python cache (Jarvis leftovers)
+__pycache__/
+*.pyc
+.jarvis_log.txt
+
+# Build output
+build/
+dist/
